@@ -1,3 +1,7 @@
+#!groovy
+
+import groovy.json.JsonOutput
+
 node {
 	// Mark the code checkout 'stage'....
 	stage ('checkout') {
