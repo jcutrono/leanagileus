@@ -2,7 +2,7 @@ node {
 	// Mark the code checkout 'stage'....
 	stage ('checkout') {
 		// Get some code from a GitHub repository
-		git url: 'https://github.com/jcutrono/leanagileus'
+		git url: 'https://github.com/jcutrono/leanagileus', branch: 'develop'
 		sh 'git clean -fdx; sleep 4;'
 	}
 	
@@ -19,14 +19,13 @@ node {
 	stage ('test') {		
 		sh "go test"
 	}
+	
+	notifySlack("build succeeded")
 
-	stage ('archive') {
-		archive 'target/*.jar'
+	stage ('merge to master') {
+		sh "git checkout master"
+		sh "git merge develop"
 	}
-}
-
-
-node {
 	
 	stage ('deploy Production') {
 		input 'Proceed?'
@@ -35,9 +34,7 @@ node {
 	}
 }
 
-// Add whichever params you think you'd most want to have
-// replace the slackURL below with the hook url provided by
-// slack when you configure the webhook
+
 def notifySlack(text) {
     def slackURL = 'https://hooks.slack.com/services/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'
     def payload = JsonOutput.toJson([text      : text,
