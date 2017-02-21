@@ -6,17 +6,13 @@ node {
 		sh 'git clean -fdx; sleep 4;'
 	}
 	
-	// Get the maven tool.
-	// ** NOTE: This 'mvn' maven tool must be configured
-	// **       in the global configuration.	
 	def goTool = tool 'go'	
 	
-	stage ('build') {
-		// set the version of the build artifact to the Jenkins BUILD_NUMBER so you can
-		// map artifacts to Jenkins builds		
+	stage ('build') {	
 		env.GOPATH="${env.HOME}/go-plugins"
 		
-		sh "go get ./..."
+		sh "go get github.com/gorilla/mux"
+		sh "go get gopkg.in/mgo.v2"
 		sh "go build -i"
 	}
 	
