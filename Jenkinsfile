@@ -17,12 +17,8 @@ node {
 	}
 	
 	stage ('test') {
-		parallel 'test': {
-		// go test -coverprofile=coverage.out > results.out
-			sh "go test"
-		}, 'verify': {
-			sh "${mvnHome}/bin/mvn verify; sleep 3"
-		}
+		
+		sh "go test"
 	}
 
 	stage ('archive') {
