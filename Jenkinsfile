@@ -16,8 +16,7 @@ node {
 		sh "go build -i"
 	}
 	
-	stage ('test') {
-		
+	stage ('test') {		
 		sh "go test"
 	}
 
