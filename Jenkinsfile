@@ -18,7 +18,7 @@ node {
 	
 	stage ('test') {
 		parallel 'test': {
-			sh "go test -v"
+			sh "go test"
 		}, 'verify': {
 			sh "${mvnHome}/bin/mvn verify; sleep 3"
 		}
