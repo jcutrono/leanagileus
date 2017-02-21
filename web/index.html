@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ITPalooza - GWeb</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+<h1>Gweb Operational. Hi Broward College</h1>
+<h2 id="db">{nothing yet}</h2>
+</body>
+
+<script>
+	$.getJSON( "/api/test", function( data ) {
+	  $( "#db" ).html( "Hi from database: " + data.Name );
+	});
+</script>
+
+</html>
