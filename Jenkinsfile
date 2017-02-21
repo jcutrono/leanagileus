@@ -18,6 +18,7 @@ node {
 	
 	stage ('test') {
 		parallel 'test': {
+		// go test -coverprofile=coverage.out > results.out
 			sh "go test"
 		}, 'verify': {
 			sh "${mvnHome}/bin/mvn verify; sleep 3"
@@ -31,9 +32,6 @@ node {
 
 
 node {
-	stage ('deploy Canary') {
-		sh 'echo "write your deploy code here"; sleep 5;'
-	}
 	
 	stage ('deploy Production') {
 		input 'Proceed?'
