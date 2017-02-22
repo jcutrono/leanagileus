@@ -4,8 +4,7 @@ import groovy.json.JsonOutput
 
 node {	
 	
-	stage ('checkout') {
-		// Get some code from a GitHub repository		
+	stage ('checkout') {			
 		git url: 'https://github.com/jcutrono/leanagileus', branch: "${env.BRANCH_NAME}"
 		sh 'git clean -fdx; sleep 4;'
 	}
@@ -42,6 +41,7 @@ node {
 		notifySlack("deploying to production")
 		
 		stage ('deploy production') {
+			sh "git remote add deploy dokku@ec2-54-202-56-172.us-west-2.compute.amazonaws.com:leanagileus"
 			sh "git push deploy master"
 		}
 	}
