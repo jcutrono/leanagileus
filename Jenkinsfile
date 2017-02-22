@@ -3,7 +3,8 @@
 import groovy.json.JsonOutput
 
 node {
-	// Mark the code checkout 'stage'....
+	sh "echo ${env.BRANCH_NAME}"
+	
 	stage ('checkout') {
 		// Get some code from a GitHub repository		
 		git url: 'https://github.com/jcutrono/leanagileus', branch: '${env.BRANCH_NAME}'
