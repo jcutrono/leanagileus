@@ -27,16 +27,13 @@ node {
 	notifySlack("build succeeded")
 
 	stage ('merge to master') {
-		sh "git checkout master"
-		sh "git pull origin master"
-		sh "git merge develop"
-		sh "git push origin master"
-	}
-	
-	stage ('deploy Production') {
-		input 'Proceed?'
-		sh 'echo "write your deploy code here"; sleep 6;'
-		archive 'target/*.jar'
+		withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'mylogin',
+                    usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+			sh "git checkout master"
+			sh "git pull origin master"
+			sh "git merge develop"
+			sh "git push https://$USERNAME:$PASSWORD@myrepository.biz/file.git master"
+		}
 	}
 }
 
