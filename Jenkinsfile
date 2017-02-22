@@ -27,12 +27,12 @@ node {
 	notifySlack("build succeeded")
 
 	stage ('merge to master') {
-		withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'mylogin',
+		withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'git',
                     usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
 			sh "git checkout master"
 			sh "git pull origin master"
 			sh "git merge develop"
-			sh "git push https://$USERNAME:$PASSWORD@myrepository.biz/file.git master"
+			sh "git push https://$USERNAME:$PASSWORD@github.com/jcutrono/leanagileus.git master"
 		}
 	}
 }
