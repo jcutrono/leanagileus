@@ -24,9 +24,9 @@ node {
 		sh "go test"
 	}
 	
-	notifySlack("build succeeded")
-	
 	if(env.BRANCH_NAME == "develop"){
+		notifySlack("build succeeded")
+		
 		stage ('merge to master') {
 			withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'git',
 						usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
@@ -39,6 +39,8 @@ node {
 	}
 	
 	if(env.BRANCH_NAME == "master"){
+		notifySlack("deploying to production")
+		
 		stage ('deploy production') {
 			sh "git push deploy master"
 		}
