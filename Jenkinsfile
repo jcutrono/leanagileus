@@ -5,8 +5,8 @@ import groovy.json.JsonOutput
 node {
 	// Mark the code checkout 'stage'....
 	stage ('checkout') {
-		// Get some code from a GitHub repository
-		git url: 'https://github.com/jcutrono/leanagileus', branch: 'develop'
+		// Get some code from a GitHub repository		
+		git url: 'https://github.com/jcutrono/leanagileus', branch: '${env.BRANCH_NAME}'
 		sh 'git clean -fdx; sleep 4;'
 	}
 	
@@ -25,14 +25,22 @@ node {
 	}
 	
 	notifySlack("build succeeded")
-
-	stage ('merge to master') {
-		withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'git',
-                    usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-			sh "git checkout master"
-			sh "git pull origin master"
-			sh "git merge develop"
-			sh "git push https://$USERNAME:$PASSWORD@github.com/jcutrono/leanagileus.git master"
+	
+	if(env.BRANCH_NAME == "develop"){
+		stage ('merge to master') {
+			withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'git',
+						usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+				sh "git checkout master"
+				sh "git pull origin master"
+				sh "git merge develop"
+				sh "git push https://$USERNAME:$PASSWORD@github.com/jcutrono/leanagileus.git master"
+			}
+		}
+	}
+	
+	if(env.BRANCH_NAME == "master"){
+		stage ('deploy production') {
+			sh "git push deploy master"
 		}
 	}
 }
