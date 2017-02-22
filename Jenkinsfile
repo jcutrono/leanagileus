@@ -2,12 +2,11 @@
 
 import groovy.json.JsonOutput
 
-node {
-	sh "echo ${env.BRANCH_NAME}"
+node {	
 	
 	stage ('checkout') {
 		// Get some code from a GitHub repository		
-		git url: 'https://github.com/jcutrono/leanagileus', branch: '${env.BRANCH_NAME}'
+		git url: 'https://github.com/jcutrono/leanagileus', branch: "${env.BRANCH_NAME}"
 		sh 'git clean -fdx; sleep 4;'
 	}
 	
