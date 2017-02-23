@@ -41,9 +41,9 @@ node {
 		notifySlack("deploying to production")
 		
 		stage ('deploy production') {
-			def output = sh returnStdout: git remote | grep dokku > /dev/null
+			def output = sh returnStdout: true, script: 'git remote | grep deploy'
 			
-			if(output) {
+			if(output == "deploy") {
 				sh "echo 'dokku already exist';"
 			}
 			else {
