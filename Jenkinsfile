@@ -41,13 +41,13 @@ node {
 		notifySlack("deploying to production")
 		
 		stage ('deploy production') {
-			if(git remote | grep deploy > /dev/null) {
-				sh "echo 'deploy already exists'"
-			}
-			else {
-				sh "echo 'setup deploy'"
-				sh "git remote add deploy dokku@ec2-54-202-56-172.us-west-2.compute.amazonaws.com:leanagileus"				
-			}
+			sh "if git remote | grep dokku > /dev/null;"
+			sh "then"
+			sh "echo 'dokku already exist';"
+			sh "else"
+			sh "echo 'dokku remote does not already exist';"
+			sh "git remote add deploy dokku@ec2-54-202-56-172.us-west-2.compute.amazonaws.com:leanagileus"
+			sh "fi"					
 			
 			sh "git push deploy master"
 		}
