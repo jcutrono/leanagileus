@@ -19,4 +19,4 @@ RUN go install
 ENTRYPOINT /go/bin/gweb
 
 # Document that the service listens on port 8080.
-EXPOSE 8080
+EXPOSE 8081
