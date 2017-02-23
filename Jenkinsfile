@@ -44,7 +44,7 @@ node {
 			def output = sh returnStdout: true, script: 'git remote | grep deploy'
 			sh "echo ${output}"
 			
-			if(output == "deploy") {
+			if(output.contains("deploy")) {
 				sh "echo 'dokku already exist';"
 			}
 			else {
