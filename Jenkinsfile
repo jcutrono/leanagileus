@@ -42,6 +42,7 @@ node {
 		
 		stage ('deploy production') {
 			def output = sh returnStdout: true, script: 'git remote | grep deploy'
+			sh "echo ${output}"
 			
 			if(output == "deploy") {
 				sh "echo 'dokku already exist';"
