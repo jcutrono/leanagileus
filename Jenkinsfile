@@ -44,12 +44,12 @@ node {
 			def output = sh returnStdout: true, script: 'git remote | grep deploy'
 			sh "echo ${output}"
 			
-			if(output.equals("deploy")) {
-				sh "echo 'dokku already exist';"
-			}
-			else {
+			if(output.isEmpty()) {
 				sh "echo 'dokku remote does not already exist';"
 				sh "git remote add deploy dokku@ec2-54-202-56-172.us-west-2.compute.amazonaws.com:leanagileus"
+			}
+			else {
+				sh "echo 'dokku already exist';"				
 			}
 			
 			sh "git push deploy master"
