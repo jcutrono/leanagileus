@@ -50,8 +50,7 @@ node {
 				sh "echo 'dokku remote does not already exist';"
 				sh "git remote add deploy dokku@ec2-54-202-56-172.us-west-2.compute.amazonaws.com:leanagileus"				
 			}
-			
-			sh "whoami"
+						
 			sh "git push deploy master"
 		}
 	}
