@@ -1,0 +1,11 @@
+'use strict';
+
+exports.handler = (event, context, callback) => {
+    var exec = require('child_process').exec;
+    var cmd = "CRUMB=$(curl -s 'http://{un}:{apikey}@ec2-54-202-56-172.us-west-2.compute.amazonaws.com:8080/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,\":\",//crumb)') && curl -X POST -H \"$CRUMB\" \"http://{un}:{apikey}@ec2-54-202-56-172.us-west-2.compute.amazonaws.com:8080/job/WebApp/job/master/build\"";
+    
+    exec(cmd, function(error, stdout, stderr) {
+      // command output is in stdout
+      console.log(stdout)
+    });
+};
