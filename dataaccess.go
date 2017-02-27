@@ -59,5 +59,5 @@ func init() {
 		mongourl = "mongodb://localhost"
 	}
 
-	Database = "gweb"
+	Database = "leanagiledb"
 }
